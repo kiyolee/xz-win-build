@@ -142,8 +142,10 @@
 #define MYTHREAD_VISTA 1
 #endif
 
+#if 0 /* Control by project setting */
 /* Define to 1 to disable debugging code. */
 #define NDEBUG 1
+#endif
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "XZ Utils"
