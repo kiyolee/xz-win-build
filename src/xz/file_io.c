@@ -39,6 +39,18 @@ static bool warn_fchown;
 
 #include "tuklib_open_stdxxx.h"
 
+#ifdef _MSC_VER
+#define close	_close
+#define lseek	_lseek
+#define open	_open
+#define read	_read
+#define setmode	_setmode
+#define unlink	_unlink
+#define write	_write
+#define S_ISDIR(m)	(((m) & _S_IFMT) == _S_IFDIR)
+#define S_ISREG(m)	(((m) & _S_IFMT) == _S_IFREG)
+#endif
+
 #ifndef O_BINARY
 #	define O_BINARY 0
 #endif
@@ -933,7 +945,11 @@ io_open_dest_real(file_pair *pair)
 #ifndef TUKLIB_DOSLIKE
 		flags |= O_NONBLOCK;
 #endif
+#ifdef _MSC_VER
+		const mode_t mode = _S_IREAD | _S_IWRITE;
+#else
 		const mode_t mode = S_IRUSR | S_IWUSR;
+#endif
 		pair->dest_fd = open(pair->dest_name, flags, mode);
 
 		if (pair->dest_fd == -1) {

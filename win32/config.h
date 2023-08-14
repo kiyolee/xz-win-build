@@ -142,6 +142,8 @@
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "XZ Utils"
 
+#define PACKAGE_BUGREPORT "xz@tukaani.org"
+
 /* Define to the home page for this package. */
 #define PACKAGE_URL "https://tukaani.org/xz/"
 

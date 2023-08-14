@@ -13,6 +13,10 @@
 #include "private.h"
 #include <stdarg.h>
 
+#ifdef _MSC_VER
+#include <io.h>
+#define isatty _isatty
+#endif
 
 /// Buffers for uint64_to_str() and uint64_to_nicestr()
 static char bufs[4][128];
@@ -142,6 +146,13 @@ round_up_to_mib(uint64_t n)
 }
 
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4474) // 'snprintf' : too many arguments passed for format string
+#pragma warning(disable: 4476) // 'snprintf' : unknown type field character ''' in format specifier
+#endif
+
+
 /// Check if thousands separator is supported. Run-time checking is easiest
 /// because it seems to be sometimes lacking even on a POSIXish system.
 /// Note that trying to use thousands separators when snprintf() doesn't
@@ -233,6 +244,11 @@ uint64_to_nicestr(uint64_t value, enum nicestr_unit unit_min,
 
 	return bufs[slot];
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 
 extern void
