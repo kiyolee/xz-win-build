@@ -7,7 +7,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../src/common;../../src/liblzma/api;../../src/getopt;../../win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src/common;../../src/liblzma/api;../../win32;../../src/getopt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;LZMA_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -20,7 +20,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../src/common;../../src/liblzma/api;../../src/getopt;../../win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src/common;../../src/liblzma/api;../../win32;../../src/getopt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;LZMA_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -33,7 +33,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../src/common;../../src/liblzma/api;../../src/getopt;../../win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src/common;../../src/liblzma/api;../../win32;../../src/getopt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;LZMA_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -46,7 +46,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../src/common;../../src/liblzma/api;../../src/getopt;../../win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src/common;../../src/liblzma/api;../../win32;../../src/getopt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;LZMA_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
