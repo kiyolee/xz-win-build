@@ -71,24 +71,84 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz-static.exe
+copy /y $(TargetPath) $(OutDir)xzcat-static.exe
+copy /y $(TargetPath) $(OutDir)lzma-static.exe
+copy /y $(TargetPath) $(OutDir)unlzma-static.exe
+copy /y $(TargetPath) $(OutDir)lzcat-static.exe
+mkdir $(OutDir)static 2&gt;nul
+copy /y $(TargetPath) $(OutDir)static\xz.exe
+copy /y $(TargetPath) $(OutDir)static\unxz.exe
+copy /y $(TargetPath) $(OutDir)static\xzcat.exe
+copy /y $(TargetPath) $(OutDir)static\lzma.exe
+copy /y $(TargetPath) $(OutDir)static\unlzma.exe
+copy /y $(TargetPath) $(OutDir)static\lzcat.exe
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz-static.exe
+copy /y $(TargetPath) $(OutDir)xzcat-static.exe
+copy /y $(TargetPath) $(OutDir)lzma-static.exe
+copy /y $(TargetPath) $(OutDir)unlzma-static.exe
+copy /y $(TargetPath) $(OutDir)lzcat-static.exe
+mkdir $(OutDir)static 2&gt;nul
+copy /y $(TargetPath) $(OutDir)static\xz.exe
+copy /y $(TargetPath) $(OutDir)static\unxz.exe
+copy /y $(TargetPath) $(OutDir)static\xzcat.exe
+copy /y $(TargetPath) $(OutDir)static\lzma.exe
+copy /y $(TargetPath) $(OutDir)static\unlzma.exe
+copy /y $(TargetPath) $(OutDir)static\lzcat.exe
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz-static.exe
+copy /y $(TargetPath) $(OutDir)xzcat-static.exe
+copy /y $(TargetPath) $(OutDir)lzma-static.exe
+copy /y $(TargetPath) $(OutDir)unlzma-static.exe
+copy /y $(TargetPath) $(OutDir)lzcat-static.exe
+mkdir $(OutDir)static 2&gt;nul
+copy /y $(TargetPath) $(OutDir)static\xz.exe
+copy /y $(TargetPath) $(OutDir)static\unxz.exe
+copy /y $(TargetPath) $(OutDir)static\xzcat.exe
+copy /y $(TargetPath) $(OutDir)static\lzma.exe
+copy /y $(TargetPath) $(OutDir)static\unlzma.exe
+copy /y $(TargetPath) $(OutDir)static\lzcat.exe
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz-static.exe
+copy /y $(TargetPath) $(OutDir)xzcat-static.exe
+copy /y $(TargetPath) $(OutDir)lzma-static.exe
+copy /y $(TargetPath) $(OutDir)unlzma-static.exe
+copy /y $(TargetPath) $(OutDir)lzcat-static.exe
+mkdir $(OutDir)static 2&gt;nul
+copy /y $(TargetPath) $(OutDir)static\xz.exe
+copy /y $(TargetPath) $(OutDir)static\unxz.exe
+copy /y $(TargetPath) $(OutDir)static\xzcat.exe
+copy /y $(TargetPath) $(OutDir)static\lzma.exe
+copy /y $(TargetPath) $(OutDir)static\unlzma.exe
+copy /y $(TargetPath) $(OutDir)static\lzcat.exe
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\common\tuklib_exit.c" />
@@ -142,4 +202,18 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="AfterClean">
+    <Exec Command="if exist $(OutDir)unxz-static.exe del $(OutDir)unxz-static.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)xzcat-static.exe del $(OutDir)xzcat-static.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)lzma-static.exe del $(OutDir)lzma-static.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)unlzma-static.exe del $(OutDir)unlzma-static.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)lzcat-static.exe del $(OutDir)lzcat-static.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)static\xz.exe del $(OutDir)static\xz.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)static\unxz.exe del $(OutDir)static\unxz.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)static\xzcat.exe del $(OutDir)static\xzcat.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)static\lzma.exe del $(OutDir)static\lzma.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)static\unlzma.exe del $(OutDir)static\unlzma.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)static\lzcat.exe del $(OutDir)static\lzcat.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)static\ rmdir $(OutDir)static 2&gt;nul" />
+  </Target>
 </Project>

@@ -71,24 +71,56 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz.exe
+copy /y $(TargetPath) $(OutDir)xzcat.exe
+copy /y $(TargetPath) $(OutDir)lzma.exe
+copy /y $(TargetPath) $(OutDir)unlzma.exe
+copy /y $(TargetPath) $(OutDir)lzcat.exe
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz.exe
+copy /y $(TargetPath) $(OutDir)xzcat.exe
+copy /y $(TargetPath) $(OutDir)lzma.exe
+copy /y $(TargetPath) $(OutDir)unlzma.exe
+copy /y $(TargetPath) $(OutDir)lzcat.exe
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz.exe
+copy /y $(TargetPath) $(OutDir)xzcat.exe
+copy /y $(TargetPath) $(OutDir)lzma.exe
+copy /y $(TargetPath) $(OutDir)unlzma.exe
+copy /y $(TargetPath) $(OutDir)lzcat.exe
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz.exe
+copy /y $(TargetPath) $(OutDir)xzcat.exe
+copy /y $(TargetPath) $(OutDir)lzma.exe
+copy /y $(TargetPath) $(OutDir)unlzma.exe
+copy /y $(TargetPath) $(OutDir)lzcat.exe
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\common\tuklib_exit.c" />
@@ -142,4 +174,11 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="AfterClean">
+    <Exec Command="if exist $(OutDir)unxz.exe del $(OutDir)unxz.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)xzcat.exe del $(OutDir)xzcat.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)lzma.exe del $(OutDir)lzma.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)unlzma.exe del $(OutDir)unlzma.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)lzcat.exe del $(OutDir)lzcat.exe /F /Q 2&gt;nul" />
+  </Target>
 </Project>
