@@ -71,24 +71,40 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>mkdir $(OutDir)static 2&gt;nul
+copy /y $(TargetPath) $(OutDir)static\xzdec.exe</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>mkdir $(OutDir)static 2&gt;nul
+copy /y $(TargetPath) $(OutDir)static\xzdec.exe</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>mkdir $(OutDir)static 2&gt;nul
+copy /y $(TargetPath) $(OutDir)static\xzdec.exe</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
+    <PostBuildEvent>
+      <Command>mkdir $(OutDir)static 2&gt;nul
+copy /y $(TargetPath) $(OutDir)static\xzdec.exe</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\common\tuklib_exit.c" />
@@ -111,4 +127,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="AfterClean">
+    <Exec Command="if exist $(OutDir)static\xzdec.exe del $(OutDir)static\xzdec.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)static\ rmdir $(OutDir)static 2&gt;nul" />
+  </Target>
 </Project>
