@@ -90,7 +90,13 @@ tuklib_physmem(void)
 	uint64_t ret = 0;
 
 #if defined(_WIN32) || defined(__CYGWIN__)
-#if 0
+#if defined(_WIN32_WINNT_WIN2K) && _WIN32_WINNT >= _WIN32_WINNT_WIN2K
+	// Already targeting Windows 2000 or later, no need to dynamically find the API.
+	MEMORYSTATUSEX meminfo;
+	meminfo.dwLength = sizeof(meminfo);
+	if (GlobalMemoryStatusEx(&meminfo))
+		ret = meminfo.ullTotalPhys;
+#else
 	if ((GetVersion() & 0xFF) >= 5) {
 		// Windows 2000 and later have GlobalMemoryStatusEx() which
 		// supports reporting values greater than 4 GiB. To keep the
@@ -116,11 +122,6 @@ tuklib_physmem(void)
 			}
 		}
 	}
-#else
-	MEMORYSTATUSEX meminfo;
-	meminfo.dwLength = sizeof(meminfo);
-	if (GlobalMemoryStatusEx(&meminfo))
-		ret = meminfo.ullTotalPhys;
 #endif
 
 	if (ret == 0) {
