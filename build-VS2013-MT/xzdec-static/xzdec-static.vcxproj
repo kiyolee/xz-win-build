@@ -107,19 +107,21 @@ copy /y $(TargetPath) $(OutDir)static\xzdec.exe</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\lib\getopt.c" />
+    <ClCompile Include="..\..\lib\getopt1.c" />
     <ClCompile Include="..\..\src\common\tuklib_exit.c" />
     <ClCompile Include="..\..\src\common\tuklib_progname.c" />
-    <ClCompile Include="..\..\src\getopt\getopt_long.c" />
     <ClCompile Include="..\..\src\xzdec\xzdec.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\lib\getopt.h" />
+    <ClInclude Include="..\..\lib\getopt_int.h" />
     <ClInclude Include="..\..\src\common\sysdefs.h" />
     <ClInclude Include="..\..\src\common\tuklib_common.h" />
     <ClInclude Include="..\..\src\common\tuklib_config.h" />
     <ClInclude Include="..\..\src\common\tuklib_exit.h" />
     <ClInclude Include="..\..\src\common\tuklib_gettext.h" />
     <ClInclude Include="..\..\src\common\tuklib_progname.h" />
-    <ClInclude Include="..\..\src\getopt\getopt.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\xzdec\xzdec_w32res.rc" />

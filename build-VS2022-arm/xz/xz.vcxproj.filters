@@ -36,6 +36,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\lib\getopt.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\getopt1.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\common\tuklib_exit.c">
       <Filter>Source Files\common</Filter>
     </ClCompile>
@@ -50,9 +56,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\common\tuklib_progname.c">
       <Filter>Source Files\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\getopt\getopt_long.c">
-      <Filter>Source Files\getopt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\xz\args.c">
       <Filter>Source Files\xz</Filter>
@@ -92,6 +95,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\lib\getopt.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\getopt_int.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\common\mythread.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
@@ -121,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\tuklib_progname.h">
       <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\getopt\getopt.h">
-      <Filter>Header Files\getopt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\xz\args.h">
       <Filter>Header Files\xz</Filter>

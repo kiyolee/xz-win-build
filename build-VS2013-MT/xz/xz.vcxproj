@@ -123,12 +123,13 @@ copy /y $(TargetPath) $(OutDir)lzcat.exe
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\lib\getopt.c" />
+    <ClCompile Include="..\..\lib\getopt1.c" />
     <ClCompile Include="..\..\src\common\tuklib_exit.c" />
     <ClCompile Include="..\..\src\common\tuklib_mbstr_fw.c" />
     <ClCompile Include="..\..\src\common\tuklib_mbstr_width.c" />
     <ClCompile Include="..\..\src\common\tuklib_open_stdxxx.c" />
     <ClCompile Include="..\..\src\common\tuklib_progname.c" />
-    <ClCompile Include="..\..\src\getopt\getopt_long.c" />
     <ClCompile Include="..\..\src\xz\args.c" />
     <ClCompile Include="..\..\src\xz\coder.c" />
     <ClCompile Include="..\..\src\xz\file_io.c" />
@@ -143,6 +144,8 @@ copy /y $(TargetPath) $(OutDir)lzcat.exe
     <ClCompile Include="..\..\src\xz\util.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\lib\getopt.h" />
+    <ClInclude Include="..\..\lib\getopt_int.h" />
     <ClInclude Include="..\..\src\common\mythread.h" />
     <ClInclude Include="..\..\src\common\sysdefs.h" />
     <ClInclude Include="..\..\src\common\tuklib_common.h" />
@@ -153,7 +156,6 @@ copy /y $(TargetPath) $(OutDir)lzcat.exe
     <ClInclude Include="..\..\src\common\tuklib_mbstr.h" />
     <ClInclude Include="..\..\src\common\tuklib_open_stdxxx.h" />
     <ClInclude Include="..\..\src\common\tuklib_progname.h" />
-    <ClInclude Include="..\..\src\getopt\getopt.h" />
     <ClInclude Include="..\..\src\xz\args.h" />
     <ClInclude Include="..\..\src\xz\coder.h" />
     <ClInclude Include="..\..\src\xz\file_io.h" />

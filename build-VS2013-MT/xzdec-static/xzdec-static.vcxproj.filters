@@ -33,20 +33,29 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\lib\getopt.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\getopt1.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\common\tuklib_exit.c">
       <Filter>Source Files\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\common\tuklib_progname.c">
       <Filter>Source Files\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\getopt\getopt_long.c">
-      <Filter>Source Files\getopt</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\xzdec\xzdec.c">
       <Filter>Source Files\xzdec</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\lib\getopt.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\getopt_int.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\common\sysdefs.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
@@ -64,9 +73,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\common\tuklib_progname.h">
       <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\getopt\getopt.h">
-      <Filter>Header Files\getopt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
