@@ -18,9 +18,6 @@
 TUKLIB_DECLS_BEGIN
 
 #define tuklib_exit TUKLIB_SYMBOL(tuklib_exit)
-#ifdef _MSC_VER
-__declspec(noreturn)
-#endif
 extern void tuklib_exit(int status, int err_status, int show_error)
 		tuklib_attr_noreturn;
 

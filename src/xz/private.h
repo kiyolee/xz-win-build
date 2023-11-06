@@ -21,8 +21,9 @@
 #include <signal.h>
 #include <locale.h>
 #include <stdio.h>
+
 #ifndef _MSC_VER
-#include <unistd.h>
+#	include <unistd.h>
 #endif
 
 #include "tuklib_gettext.h"
@@ -36,7 +37,7 @@
 #endif
 
 #ifdef _MSC_VER
-#define fileno _fileno
+#	define fileno _fileno
 #endif
 
 #ifndef STDIN_FILENO

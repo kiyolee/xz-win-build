@@ -40,23 +40,29 @@ static bool warn_fchown;
 #include "tuklib_open_stdxxx.h"
 
 #ifdef _MSC_VER
-#define close	_close
-#define lseek	_lseeki64
-#define open	_open
-#define read	_read
-#define setmode	_setmode
-#define unlink	_unlink
-#define write	_write
-#define S_ISDIR(m)	(((m) & _S_IFMT) == _S_IFDIR)
-#define S_ISREG(m)	(((m) & _S_IFMT) == _S_IFREG)
-#endif
+#	ifdef _WIN64
+		typedef __int64 ssize_t;
+#	else
+		typedef int ssize_t;
+#	endif
 
-#ifndef SSIZE_MAX
-#ifdef _WIN64
-#define SSIZE_MAX INT64_MAX
-#else
-#define SSIZE_MAX INT32_MAX
-#endif
+	typedef int mode_t;
+#	define S_IRUSR _S_IREAD
+#	define S_IWUSR _S_IWRITE
+
+#	define setmode _setmode
+#	define open _open
+#	define close _close
+#	define lseek _lseeki64
+#	define unlink _unlink
+
+	// The casts are to silence warnings.
+	// The sizes are known to be small enough.
+#	define read(fd, buf, size) _read(fd, buf, (unsigned int)(size))
+#	define write(fd, buf, size) _write(fd, buf, (unsigned int)(size))
+
+#	define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
+#	define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
 #endif
 
 #ifndef O_BINARY
@@ -335,7 +341,7 @@ io_wait(file_pair *pair, int timeout, bool is_reading)
 /// a small unavoidable race, but this is much better than nothing (the file
 /// could have been moved/replaced even hours earlier).
 static void
-io_unlink(const char *name, const xz_stat_t *known_st)
+io_unlink(const char *name, const struct stat *known_st)
 {
 #if defined(TUKLIB_DOSLIKE)
 	// On DOS-like systems, st_ino is meaningless, so don't bother
@@ -713,7 +719,7 @@ io_open_src_real(file_pair *pair)
 	if (stat(pair->src_name, &pair->src_st))
 		goto error_msg;
 #else
-	if (xz_fstat(pair->src_fd, &pair->src_st))
+	if (fstat(pair->src_fd, &pair->src_st))
 		goto error_msg;
 #endif
 
@@ -953,11 +959,7 @@ io_open_dest_real(file_pair *pair)
 #ifndef TUKLIB_DOSLIKE
 		flags |= O_NONBLOCK;
 #endif
-#ifdef _MSC_VER
-		const int mode = _S_IREAD | _S_IWRITE;
-#else
 		const mode_t mode = S_IRUSR | S_IWUSR;
-#endif
 		pair->dest_fd = open(pair->dest_name, flags, mode);
 
 		if (pair->dest_fd == -1) {
@@ -968,20 +970,41 @@ io_open_dest_real(file_pair *pair)
 		}
 	}
 
-#ifndef TUKLIB_DOSLIKE
-	// dest_st isn't used on DOS-like systems except as a dummy
-	// argument to io_unlink(), so don't fstat() on such systems.
 	if (fstat(pair->dest_fd, &pair->dest_st)) {
 		// If fstat() really fails, we have a safe fallback here.
-#	if defined(__VMS)
+#if defined(__VMS)
 		pair->dest_st.st_ino[0] = 0;
 		pair->dest_st.st_ino[1] = 0;
 		pair->dest_st.st_ino[2] = 0;
-#	else
+#else
 		pair->dest_st.st_dev = 0;
 		pair->dest_st.st_ino = 0;
-#	endif
-	} else if (try_sparse && opt_mode == MODE_DECOMPRESS) {
+#endif
+	}
+#if defined(TUKLIB_DOSLIKE) && !defined(__DJGPP__)
+	// Check that the output file is a regular file. We open with O_EXCL
+	// but that doesn't prevent open()/_open() on Windows from opening
+	// files like "con" or "nul".
+	//
+	// With DJGPP this check is done with stat() even before opening
+	// the output file. That method or a variant of it doesn't work on
+	// Windows because on Windows stat()/_stat64() sets st.st_mode so
+	// that S_ISREG(st.st_mode) will be true even for special files.
+	// With fstat()/_fstat64() it works.
+	else if (pair->dest_fd != STDOUT_FILENO
+			&& !S_ISREG(pair->dest_st.st_mode)) {
+		message_error("%s: Destination is not a regular file",
+				pair->dest_name);
+
+		// dest_fd needs to be reset to -1 to keep io_close() working.
+		(void)close(pair->dest_fd);
+		pair->dest_fd = -1;
+
+		free(pair->dest_name);
+		return true;
+	}
+#elif !defined(TUKLIB_DOSLIKE)
+	else if (try_sparse && opt_mode == MODE_DECOMPRESS) {
 		// When writing to standard output, we need to be extra
 		// careful:
 		//  - It may be connected to something else than
@@ -1171,7 +1194,7 @@ io_fix_src_pos(file_pair *pair, size_t rewind_size)
 	if (rewind_size > 0) {
 		// This doesn't need to work on unseekable file descriptors,
 		// so just ignore possible errors.
-		(void)lseek(pair->src_fd, -(xz_off_t)(rewind_size), SEEK_CUR);
+		(void)lseek(pair->src_fd, -(off_t)(rewind_size), SEEK_CUR);
 	}
 
 	return;
@@ -1181,21 +1204,13 @@ io_fix_src_pos(file_pair *pair, size_t rewind_size)
 extern size_t
 io_read(file_pair *pair, io_buf *buf, size_t size)
 {
-	// We use small buffers here.
-	assert(size < (size_t)SSIZE_MAX);
+	assert(size <= IO_BUFFER_SIZE);
 
 	size_t pos = 0;
 
 	while (pos < size) {
-		const size_t _readsz = size - pos;
-#ifdef _MSC_VER
-		const unsigned int readsz = (_readsz <= (size_t)UINT32_MAX)
-			? ((unsigned int)_readsz) : UINT32_MAX;
-#else
-		const size_t readsz = _readsz;
-#endif
 		const ssize_t amount = read(
-				pair->src_fd, buf->u8 + pos, readsz);
+				pair->src_fd, buf->u8 + pos, size - pos);
 
 		if (amount == 0) {
 			pair->src_eof = true;
@@ -1266,7 +1281,7 @@ io_seek_src(file_pair *pair, uint64_t pos)
 	if (pos > (uint64_t)(pair->src_st.st_size))
 		message_bug();
 
-	if (lseek(pair->src_fd, (xz_off_t)(pos), SEEK_SET) == -1) {
+	if (lseek(pair->src_fd, (off_t)(pos), SEEK_SET) == -1) {
 		message_error(_("%s: Error seeking the file: %s"),
 				pair->src_name, strerror(errno));
 		return true;
@@ -1316,17 +1331,10 @@ is_sparse(const io_buf *buf)
 static bool
 io_write_buf(file_pair *pair, const uint8_t *buf, size_t size)
 {
-	assert(size < (size_t)SSIZE_MAX);
+	assert(size <= IO_BUFFER_SIZE);
 
 	while (size > 0) {
-		const size_t _writesz = size;
-#ifdef _MSC_VER
-		const unsigned int writesz = (_writesz <= (size_t)UINT32_MAX)
-			? ((unsigned int)_writesz) : UINT32_MAX;
-#else
-		const size_t writesz = _writesz;
-#endif
-		const ssize_t amount = write(pair->dest_fd, buf, writesz);
+		const ssize_t amount = write(pair->dest_fd, buf, size);
 		if (amount == -1) {
 			if (errno == EINTR) {
 				if (user_abort)
@@ -1390,11 +1398,11 @@ io_write(file_pair *pair, const io_buf *buf, size_t size)
 			// if the pending sparse amount is large compared to
 			// the size of off_t. In practice this only matters
 			// on 32-bit systems where off_t isn't always 64 bits.
-			const xz_off_t pending_max
-				= (xz_off_t)(1) << (sizeof(xz_off_t) * CHAR_BIT - 2);
+			const off_t pending_max
+				= (off_t)(1) << (sizeof(off_t) * CHAR_BIT - 2);
 			if (is_sparse(buf) && pair->dest_pending_sparse
 					< pending_max) {
-				pair->dest_pending_sparse += (xz_off_t)(size);
+				pair->dest_pending_sparse += (off_t)(size);
 				return false;
 			}
 		} else if (size == 0) {

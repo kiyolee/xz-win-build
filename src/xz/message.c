@@ -15,9 +15,10 @@
 #include <stdarg.h>
 
 #ifdef _MSC_VER
-#include <io.h>
-#define isatty _isatty
+#	include <io.h>
+#	define isatty _isatty
 #endif
+
 
 /// Number of the current file
 static unsigned int files_pos = 0;

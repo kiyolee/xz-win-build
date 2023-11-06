@@ -16,8 +16,9 @@
 #include <stdarg.h>
 #include <errno.h>
 #include <stdio.h>
+
 #ifndef _MSC_VER
-#include <unistd.h>
+#	include <unistd.h>
 #endif
 
 #include "getopt.h"
@@ -27,8 +28,10 @@
 #ifdef TUKLIB_DOSLIKE
 #	include <fcntl.h>
 #	include <io.h>
-#define fileno	_fileno
-#define setmode	_setmode
+#	ifdef _MSC_VER
+#		define fileno _fileno
+#		define setmode _setmode
+#	endif
 #endif
 
 
@@ -44,7 +47,8 @@
 static int display_errors = 2;
 
 
-static void lzma_attribute((__format__(__printf__, 1, 2)))
+lzma_attribute((__format__(__printf__, 1, 2)))
+static void
 my_errorf(const char *fmt, ...)
 {
 	va_list ap;
@@ -61,7 +65,8 @@ my_errorf(const char *fmt, ...)
 }
 
 
-static void lzma_attribute((__noreturn__))
+tuklib_attr_noreturn
+static void
 help(void)
 {
 	printf(
@@ -85,7 +90,8 @@ PACKAGE_NAME " home page: <" PACKAGE_URL ">\n", progname);
 }
 
 
-static void lzma_attribute((__noreturn__))
+tuklib_attr_noreturn
+static void
 version(void)
 {
 	printf(TOOL_FORMAT "dec (" PACKAGE_NAME ") " LZMA_VERSION_STRING "\n"

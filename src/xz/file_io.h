@@ -31,19 +31,6 @@ typedef union {
 } io_buf;
 
 
-#if defined(_MSC_VER) && _MSC_VER >= 1500
-typedef struct _stat64 xz_stat_t;
-typedef int64_t xz_off_t;
-#define xz_fstat _fstat64
-#define xz_stat _stat64
-#else
-typedef struct stat xz_stat_t;
-typedef off_t xz_off_t;
-#define xz_fstat fstat
-#define xz_stat stat
-#endif
-
-
 typedef struct {
 	/// Name of the source filename (as given on the command line) or
 	/// pointer to static "(stdin)" when reading from standard input.
@@ -76,13 +63,13 @@ typedef struct {
 	/// This is used only if dest_try_sparse is true. This holds the
 	/// number of zero bytes we haven't written out, because we plan
 	/// to make that byte range a sparse chunk.
-	xz_off_t dest_pending_sparse;
+	off_t dest_pending_sparse;
 
 	/// Stat of the source file.
-	xz_stat_t src_st;
+	struct stat src_st;
 
 	/// Stat of the destination file.
-	xz_stat_t dest_st;
+	struct stat dest_st;
 
 } file_pair;
 
@@ -131,7 +118,7 @@ extern void io_close(file_pair *pair, bool success);
 ///
 /// \param      pair    File pair having the source file open for reading
 /// \param      buf     Destination buffer to hold the read data
-/// \param      size    Size of the buffer; assumed be smaller than SSIZE_MAX
+/// \param      size    Size of the buffer; must be at most IO_BUFFER_SIZE
 ///
 /// \return     On success, number of bytes read is returned. On end of
 ///             file zero is returned and pair->src_eof set to true.
@@ -185,7 +172,7 @@ extern bool io_pread(file_pair *pair, io_buf *buf, size_t size, uint64_t pos);
 ///
 /// \param      pair    File pair having the destination file open for writing
 /// \param      buf     Buffer containing the data to be written
-/// \param      size    Size of the buffer; assumed be smaller than SSIZE_MAX
+/// \param      size    Size of the buffer; must be at most IO_BUFFER_SIZE
 ///
 /// \return     On success, zero is returned. On error, -1 is returned
 ///             and error message printed.
