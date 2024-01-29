@@ -153,7 +153,7 @@
 #define PACKAGE_BUGREPORT "xz@tukaani.org"
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL "https://tukaani.org/xz/"
+#define PACKAGE_URL "https://xz.tukaani.org/xz-utils/"
 
 /* The size of `size_t', as computed by sizeof. */
 #ifdef _WIN64

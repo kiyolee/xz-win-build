@@ -1,3 +1,332 @@
+commit 6e8732c5a317a349986a4078718f1d95b67072c5
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-01-26 19:41:20 +0800
+
+    Bump version and soname for 5.4.6.
+
+ src/liblzma/Makefile.am        | 2 +-
+ src/liblzma/api/lzma/version.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 6532f55caabe1323b9a3f6ac0f7f334828108c0d
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-01-26 18:54:24 +0800
+
+    Add NEWS for 5.4.6.
+
+ NEWS | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+commit 8b1a2798ad5613f5416751a96d4cbafae4778aae
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-01-19 23:08:14 +0800
+
+    Docs: Update .xz file format specification to 1.2.0.
+    
+    The new RISC-V filter was added to the specification, in addition to
+    updating the specification URL.
+
+ doc/xz-file-format.txt | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
+
+commit 55285900b3bea14d476b880ba011f5a96428581c
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-01-19 23:08:14 +0800
+
+    xz: Update website URLs in the man pages.
+
+ src/xz/xz.1       | 6 +++---
+ src/xzdec/xzdec.1 | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+commit a670f69521ceca5332c7c34dc9d2e23c2c2739ef
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-01-19 23:08:14 +0800
+
+    liblzma: Update website URL.
+
+ dos/config.h           | 2 +-
+ src/liblzma/api/lzma.h | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 05aeda9612e2a14d9f9653117f5b9f2b958e69ce
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-01-19 23:08:14 +0800
+
+    Docs: Update website URLs.
+
+ COPYING                    |  3 ++-
+ README                     |  4 ++--
+ doc/faq.txt                |  2 +-
+ doc/lzma-file-format.txt   | 18 +++++++++---------
+ windows/README-Windows.txt |  3 ++-
+ 5 files changed, 16 insertions(+), 14 deletions(-)
+
+commit 3cc54f1c0bc4fe0dcb4a9a02f17694ffd51cd7c7
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-01-19 23:08:14 +0800
+
+    Build: Update website URL.
+
+ CMakeLists.txt | 2 +-
+ configure.ac   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 82f5515de6508f6e2f59a8926912791b487cc104
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-12-21 21:39:08 +0800
+
+    Translations: Update the French translation.
+
+ po/fr.po | 632 +++++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 370 insertions(+), 262 deletions(-)
+
+commit 9e96ca8c48b0916a2bb592841df016755572cf6a
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-12-21 16:39:53 +0800
+
+    xz: Add a comment to Capsicum sandbox setup.
+    
+    This comment is repeated in xzdec.c to help remind us why all the
+    capabilities are removed from stdin in certain situations.
+
+ src/xz/file_io.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 8191720eac950a5db89c4d33d6beea6316a49b19
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-12-16 20:51:38 +0800
+
+    liblzma: Set all values in lzma_lz_encoder to NULL after allocation.
+    
+    The first member of lzma_lz_encoder doesn't necessarily need to be set
+    to NULL since it will always be set before anything tries to use it.
+    However the function pointer members must be set to NULL since other
+    functions rely on this NULL value to determine if this behavior is
+    supported or not.
+    
+    This fixes a somewhat serious bug, where the options_update() and
+    set_out_limit() function pointers are not set to NULL. This seems to
+    have been forgotten since these function pointers were added many years
+    after the original two (code() and end()).
+    
+    The problem is that by not setting this to NULL we are relying on the
+    memory allocation to zero things out if lzma_filters_update() is called
+    on a LZMA1 encoder. The function pointer for set_out_limit() is less
+    serious because there is not an API function that could call this in an
+    incorrect way. set_out_limit() is only called by the MicroLZMA encoder,
+    which must use LZMA1 where set_out_limit() is always set. Its currently
+    not possible to call set_out_limit() on an LZMA2 encoder at this time.
+    
+    So calling lzma_filters_update() on an LZMA1 encoder had undefined
+    behavior since its possible that memory could be manipulated so the
+    options_update member pointed to a different instruction sequence.
+    
+    This is unlikely to be a bug in an existing application since it relies
+    on calling lzma_filters_update() on an LZMA1 encoder in the first place.
+    For instance, it does not affect xz because lzma_filters_update() can
+    only be used when encoding to the .xz format.
+
+ src/liblzma/lz/lz_encoder.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 0ba5dd7ba13dee73dce49ce2b32b0ea7b059835d
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-12-16 20:30:55 +0800
+
+    liblzma: Tweak a comment.
+
+ src/liblzma/lz/lz_encoder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 27ab54af848ec4adc9c17362f6c64a42a7003df5
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-12-16 20:28:21 +0800
+
+    liblzma: Make parameter names in function definition match declaration.
+    
+    lzma_raw_encoder() and lzma_raw_encoder_init() used "options" as the
+    parameter name instead of "filters" (used by the declaration). "filters"
+    is more clear since the parameter represents the list of filters passed
+    to the raw encoder, each of which contains filter options.
+
+ src/liblzma/common/filter_encoder.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 019afd72e02339a6bf00c32bfb56f649c637dd6b
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-12-16 20:18:47 +0800
+
+    liblzma: Improve lzma encoder init function consistency.
+    
+    lzma_encoder_init() did not check for NULL options, but
+    lzma2_encoder_init() did. This is more of a code style improvement than
+    anything else to help make lzma_encoder_init() and lzma2_encoder_init()
+    more similar.
+
+ src/liblzma/lzma/lzma_encoder.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 6af9a4cbe5b677a2c48b009b370539ad30dc269a
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-12-16 11:20:20 +0800
+
+    Docs: Update repository URL in Changelog.
+
+ ChangeLog | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3f51a4415a6d8f9be87512a502161141cd85dffa
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-12-07 21:48:07 +0800
+
+    Tests: Silence -Wsign-conversion warning on GCC version < 10.
+    
+    Since GCC version 10, GCC no longer complains about simple implicit
+    integer conversions with Arithmetic operators.
+    
+    For instance:
+    
+        uint8_t a = 5;
+        uint32_t b = a + 5;
+    
+    Give a warning on GCC 9 and earlier but this:
+    
+        uint8_t a = 5;
+        uint32_t b = (a + 5) * 2;
+    
+    Gives a warning with GCC 10+.
+
+ tests/test_block_header.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 932f02990cfd436525e63da2e27172f6c0265997
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-11-30 23:10:43 +0800
+
+    Update THANKS.
+
+ THANKS | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit b26d5d547f28423acefb344c2c460845216154a4
+Author: Kian-Meng Ang <kianmeng@cpan.org>
+Date:   2023-11-30 23:01:19 +0800
+
+    Tests: Fix typos
+
+ tests/test_index.c        | 2 +-
+ tests/test_lzip_decoder.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 7dc466d62155cb7442aa5e10633e084ed384360d
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-11-23 22:13:39 +0800
+
+    xz: Use is_tty() in message.c.
+
+ src/xz/message.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0ecfaa6df91f7c37510f370295f593b9c0b88b98
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-11-23 22:04:35 +0800
+
+    xz: Create separate is_tty() function.
+    
+    The new is_tty() will report if a file descriptor is a terminal or not.
+    On POSIX systems, it is a wrapper around isatty(). However, the native
+    Windows implementation of isatty() will return true for all character
+    devices, not just terminals. So is_tty() has a special case for Windows
+    so it can use alternative Windows API functions to determine if a file
+    descriptor is a terminal.
+    
+    This fixes a bug with MSVC and MinGW-w64 builds that refused to read from
+    or write to non-terminal character devices because xz thought it was a
+    terminal. For instance:
+    
+        xz foo -c > /dev/null
+    
+    would fail because /dev/null was assumed to be a terminal.
+
+ src/xz/util.c | 25 +++++++++++++++++++++++--
+ src/xz/util.h | 14 ++++++++++++++
+ 2 files changed, 37 insertions(+), 2 deletions(-)
+
+commit 9a300c9068015fae0651c0835ca36d481b472ddd
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-11-22 20:39:41 +0800
+
+    tuklib_integer: Fix typo discovered by codespell.
+    
+    Based on internet dictionary searches, 'choise' is an outdated spelling
+    of 'choice'.
+
+ src/common/tuklib_integer.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9b469da8f3415e12d650705c7a82256e62e7871b
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-11-17 20:04:58 +0800
+
+    Tests: Fix typo in a comment.
+
+ tests/test_files.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit afcb30fcadae4d07ec08d5f44eabc1905b2392b1
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-11-17 20:35:11 +0800
+
+    Tests: Create test_suffix.sh.
+    
+    This tests some complicated interactions with the --suffix= option.
+    The suffix option must be used with --format=raw, but can optionally
+    be used to override the default .xz suffix.
+    
+    This test also verifies some recent bugs have been correctly solved
+    and to hopefully avoid further regressions in the future.
+
+ tests/Makefile.am    |   2 +
+ tests/test_suffix.sh | 189 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 191 insertions(+)
+
+commit 87c956d4c4604d30b01326ea88f6241ec44f5526
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-11-14 20:27:04 +0800
+
+    xz: Fix suffix check.
+    
+    The suffix refactor done in 99575947a58a60416c570eb78038d18a1ea4cef4
+    had a small regression where raw format compression to standard out
+    failed if a suffix was not set. In this case, setting the suffix did
+    not make sense since a file is not created.
+    
+    Now, xz should only fail when a suffix is not provided when it is
+    actually needed.
+    
+    For instance:
+    
+        echo "foo" | xz --format=raw --lzma2 | wc -c
+    
+    does not need a suffix check since it creates no files. But:
+    
+        xz --format=raw --lzma2 --suffix=.bar foo
+    
+    Needs the suffix to be set since it must create foo.bar.
+
+ src/xz/args.c | 30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
+
+commit 84196e8c094402cb71b669fb9e984c56ebabb145
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2023-11-09 01:21:53 +0800
+
+    liblzma: Add missing comments to lz_encoder.h.
+
+ src/liblzma/lz/lz_encoder.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
 commit 49053c0a649f4c8bd2b8d97ce915f401fbc0f3d9
 Author: Jia Tan <jiat0218@gmail.com>
 Date:   2023-10-31 22:30:29 +0800
