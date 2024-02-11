@@ -12,6 +12,9 @@
 
 #include "private.h"
 #include <stdarg.h>
+#ifdef _MSC_VER
+#include <io.h>
+#endif
 
 
 /// Buffers for uint64_to_str() and uint64_to_nicestr()
