@@ -169,6 +169,7 @@
     <ClCompile Include="..\..\src\liblzma\simple\armthumb.c" />
     <ClCompile Include="..\..\src\liblzma\simple\ia64.c" />
     <ClCompile Include="..\..\src\liblzma\simple\powerpc.c" />
+    <ClCompile Include="..\..\src\liblzma\simple\riscv.c" />
     <ClCompile Include="..\..\src\liblzma\simple\simple_coder.c" />
     <ClCompile Include="..\..\src\liblzma\simple\simple_decoder.c" />
     <ClCompile Include="..\..\src\liblzma\simple\simple_encoder.c" />
@@ -203,7 +204,6 @@
     <ClInclude Include="..\..\src\liblzma\check\crc32_table_le.h" />
     <ClInclude Include="..\..\src\liblzma\check\crc64_table_be.h" />
     <ClInclude Include="..\..\src\liblzma\check\crc64_table_le.h" />
-    <ClInclude Include="..\..\src\liblzma\check\crc_macros.h" />
     <ClInclude Include="..\..\src\liblzma\common\alone_decoder.h" />
     <ClInclude Include="..\..\src\liblzma\common\block_buffer_encoder.h" />
     <ClInclude Include="..\..\src\liblzma\common\block_decoder.h" />

@@ -42,6 +42,9 @@
 /* Define to 1 if powerpc decoder is enabled. */
 #define HAVE_DECODER_POWERPC 1
 
+/* Define to 1 if riscv decoder is enabled. */
+#define HAVE_DECODER_RISCV 1
+
 /* Define to 1 if sparc decoder is enabled. */
 #define HAVE_DECODER_SPARC 1
 
@@ -75,14 +78,22 @@
 /* Define to 1 if powerpc encoder is enabled. */
 #define HAVE_ENCODER_POWERPC 1
 
+/* Define to 1 if riscv encoder is enabled. */
+#define HAVE_ENCODER_RISCV 1
+
 /* Define to 1 if sparc encoder is enabled. */
 #define HAVE_ENCODER_SPARC 1
 
 /* Define to 1 if x86 encoder is enabled. */
 #define HAVE_ENCODER_X86 1
 
+/* Define to 1 if you have the <immintrin.h> header file. */
+#if defined(_M_IX86) || defined(_M_X64)
+#define HAVE_IMMINTRIN_H 1
+#endif
+
 /* Define to 1 if you have the <inttypes.h> header file. */
-#if defined(_MSC_VER) && _MSC_VER >= 1800
+#if defined(_MSC_VER) && _MSC_VER >= 1800 // VS2013 or later.
 #define HAVE_INTTYPES_H 1
 #endif
 
@@ -107,13 +118,19 @@
 /* Define to 1 to enable hc4 match finder. */
 #define HAVE_MF_HC4 1
 
+/* Define to 1 if MicroLZMA support is enabled. */
+#define HAVE_MICROLZMA 1
+
 /* Define to 1 if stdbool.h conforms to C99. */
-#if defined(_MSC_VER) && _MSC_VER >= 1800
+#if defined(_MSC_VER) && _MSC_VER >= 1800 // VS2013 or later.
 #define HAVE_STDBOOL_H 1
 #endif
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -121,13 +138,31 @@
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
 
+/* Define to 1 if you have the <sys/time.h> header file. */
+#define HAVE_SYS_TIME_H 1
+
+/* Define to 1 if _mm_set_epi64x and _mm_clmulepi64_si128 are usable. See
+   configure.ac for details. */
+#if defined(_MSC_VER) && (_MSC_VER >= 1900 || !defined(_M_IX86)) && (defined(_M_IX86) || defined(_M_X64)) // VS2013 (x86); VS2015 or later (x86/x64).
+#define HAVE_USABLE_CLMUL 1
+#endif
+
 /* Define to 1 or 0, depending whether the compiler supports simple visibility
    declarations. */
 #define HAVE_VISIBILITY 0
 
-/* Define to 1 if the system has the type `_Bool'. */
-#if defined(_MSC_VER) && _MSC_VER >= 1800
+/* Define to 1 if the system has the type '_Bool'. */
+#if defined(_MSC_VER) && _MSC_VER >= 1800 // VS2013 or later.
 #define HAVE__BOOL 1
+#endif
+
+/* Define to 1 if _mm_movemask_epi8 is available. */
+#define HAVE__MM_MOVEMASK_EPI8 1
+
+/* Define to 1 if the GNU C extension __builtin_assume_aligned is supported.
+   */
+#if defined(_MSC_VER) && _MSC_VER >= 1920 // VS2019 or later.
+#define HAVE___BUILTIN_ASSUME_ALIGNED 1
 #endif
 
 #ifdef _M_IX86
@@ -147,15 +182,16 @@
 #define NDEBUG 1
 #endif
 
+/* Define to the address where bug reports for this package should be sent. */
+#define PACKAGE_BUGREPORT "xz@tukaani.org"
+
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "XZ Utils"
-
-#define PACKAGE_BUGREPORT "xz@tukaani.org"
 
 /* Define to the home page for this package. */
 #define PACKAGE_URL "https://xz.tukaani.org/xz-utils/"
 
-/* The size of `size_t', as computed by sizeof. */
+/* The size of 'size_t', as computed by sizeof. */
 #ifdef _WIN64
 #define SIZEOF_SIZE_T 8
 #else

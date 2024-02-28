@@ -1,12 +1,11 @@
+// SPDX-License-Identifier: 0BSD
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 /// \file       tuklib_physmem.c
 /// \brief      Get the amount of physical memory
 //
 //  Author:     Lasse Collin
-//
-//  This file has been put into the public domain.
-//  You can do whatever you want with this file.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -70,17 +69,6 @@
 // This sysinfo() is Linux-specific.
 #elif defined(TUKLIB_PHYSMEM_SYSINFO)
 #	include <sys/sysinfo.h>
-#endif
-
-
-// With GCC >= 8.1 with -Wextra and Clang >= 13 with -Wcast-function-type
-// will warn about the Windows-specific code.
-#if defined(__has_warning)
-#	if __has_warning("-Wcast-function-type")
-#		define CAN_DISABLE_WCAST_FUNCTION_TYPE 1
-#	endif
-#elif TUKLIB_GNUC_REQ(8,1)
-#	define CAN_DISABLE_WCAST_FUNCTION_TYPE 1
 #endif
 
 

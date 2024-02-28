@@ -1,12 +1,11 @@
+// SPDX-License-Identifier: 0BSD
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 /// \file       test_filter_str.c
 /// \brief      Tests Filter string functions
 //
 //  Author:    Jia Tan
-//
-//  This file has been put into the public domain.
-//  You can do whatever you want with this file.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -466,6 +465,9 @@ static const char supported_decoders[][9] = {
 #ifdef HAVE_DECODER_ARM64
 	"arm64",
 #endif
+#ifdef HAVE_DECODER_RISCV
+	"riscv",
+#endif
 #ifdef HAVE_DECODER_DELTA
 	"delta",
 #endif
@@ -493,6 +495,9 @@ static const char supported_filters[][9] = {
 #endif
 #if defined(HAVE_ENCODER_ARM64) || defined(HAVE_DECODER_ARM64)
 	"arm64",
+#endif
+#if defined(HAVE_ENCODER_RISCV) || defined(HAVE_DECODER_RISCV)
+	"riscv",
 #endif
 #if defined(HAVE_ENCODER_DELTA) || defined(HAVE_DECODER_DELTA)
 	"delta",

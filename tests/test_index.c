@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 /// \file       test_index.c
@@ -8,9 +10,6 @@
 //  Authors:    Jia Tan
 //              Lasse Collin
 //
-//
-//  This file has been put into the public domain.
-//  You can do whatever you want with this file.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -135,7 +134,7 @@ test_lzma_index_append(void)
 	lzma_index_end(idx, NULL);
 
 	// Test compressed .xz file size growing too large. This also tests
-	// a failing assert fixed in 68bda971bb8b666a009331455fcedb4e18d837a4.
+	// a failing assert fixed in ae5c07b22a6b3766b84f409f1b6b5c100469068a.
 	// Should result in LZMA_DATA_ERROR.
 	idx = lzma_index_init(NULL);
 
@@ -224,28 +223,28 @@ test_lzma_index_checks(void)
 	assert_lzma_ret(lzma_index_stream_flags(idx, &stream_flags),
 			LZMA_OK);
 	assert_uint_eq(lzma_index_checks(idx),
-			UINT32_C(1) << LZMA_CHECK_NONE);
+			LZMA_INDEX_CHECK_MASK_NONE);
 
 	// Set the check type to CRC32 and repeat
 	stream_flags.check = LZMA_CHECK_CRC32;
 	assert_lzma_ret(lzma_index_stream_flags(idx, &stream_flags),
 			LZMA_OK);
 	assert_uint_eq(lzma_index_checks(idx),
-			UINT32_C(1) << LZMA_CHECK_CRC32);
+			LZMA_INDEX_CHECK_MASK_CRC32);
 
 	// Set the check type to CRC64 and repeat
 	stream_flags.check = LZMA_CHECK_CRC64;
 	assert_lzma_ret(lzma_index_stream_flags(idx, &stream_flags),
 			LZMA_OK);
 	assert_uint_eq(lzma_index_checks(idx),
-			UINT32_C(1) << LZMA_CHECK_CRC64);
+			LZMA_INDEX_CHECK_MASK_CRC64);
 
 	// Set the check type to SHA256 and repeat
 	stream_flags.check = LZMA_CHECK_SHA256;
 	assert_lzma_ret(lzma_index_stream_flags(idx, &stream_flags),
 			LZMA_OK);
 	assert_uint_eq(lzma_index_checks(idx),
-			UINT32_C(1) << LZMA_CHECK_SHA256);
+			LZMA_INDEX_CHECK_MASK_SHA256);
 
 	// Create second lzma_index and cat to first
 	lzma_index *second = lzma_index_init(NULL);
@@ -257,14 +256,14 @@ test_lzma_index_checks(void)
 			LZMA_OK);
 
 	assert_uint_eq(lzma_index_checks(second),
-			UINT32_C(1) << LZMA_CHECK_CRC32);
+			LZMA_INDEX_CHECK_MASK_CRC32);
 
 	assert_lzma_ret(lzma_index_cat(idx, second, NULL), LZMA_OK);
 
 	// Index should now have both CRC32 and SHA256
 	assert_uint_eq(lzma_index_checks(idx),
-			(UINT32_C(1) << LZMA_CHECK_CRC32) |
-			(UINT32_C(1) << LZMA_CHECK_SHA256));
+			LZMA_INDEX_CHECK_MASK_CRC32 |
+			LZMA_INDEX_CHECK_MASK_SHA256);
 
 	// Change the check type of the second Stream to SHA256
 	stream_flags.check = LZMA_CHECK_SHA256;
@@ -273,7 +272,7 @@ test_lzma_index_checks(void)
 
 	// Index should now have only SHA256
 	assert_uint_eq(lzma_index_checks(idx),
-			UINT32_C(1) << LZMA_CHECK_SHA256);
+			LZMA_INDEX_CHECK_MASK_SHA256);
 
 	// Test with a third Stream
 	lzma_index *third = lzma_index_init(NULL);
@@ -284,14 +283,14 @@ test_lzma_index_checks(void)
 			LZMA_OK);
 
 	assert_uint_eq(lzma_index_checks(third),
-			UINT32_C(1) << LZMA_CHECK_CRC64);
+			LZMA_INDEX_CHECK_MASK_CRC64);
 
 	assert_lzma_ret(lzma_index_cat(idx, third, NULL), LZMA_OK);
 
 	// Index should now have CRC64 and SHA256
 	assert_uint_eq(lzma_index_checks(idx),
-			(UINT32_C(1) << LZMA_CHECK_CRC64) |
-			(UINT32_C(1) << LZMA_CHECK_SHA256));
+			LZMA_INDEX_CHECK_MASK_CRC64 |
+			LZMA_INDEX_CHECK_MASK_SHA256);
 
 	lzma_index_end(idx, NULL);
 }

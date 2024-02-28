@@ -1,11 +1,9 @@
 #!/bin/sh
+# SPDX-License-Identifier: 0BSD
 
 ###############################################################################
 #
 # Author: Lasse Collin
-#
-# This file has been put into the public domain.
-# You can do whatever you want with this file.
 #
 ###############################################################################
 
@@ -87,6 +85,11 @@ do
 	case $I in
 		*/good-1-arm64-lzma2-*.xz)
 			have_feature DECODER_ARM64 "$I" || continue
+			;;
+	esac
+	case $I in
+		*/good-1-riscv-lzma2-*.xz)
+			have_feature DECODER_RISCV "$I" || continue
 			;;
 	esac
 
