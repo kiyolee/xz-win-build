@@ -1,3 +1,307 @@
+commit fd1b975b7851e081ed6e5cf63df946cd5cbdbb94
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 11:42:50 +0800
+
+    Bump version and soname for 5.6.1.
+
+ src/liblzma/Makefile.am        | 2 +-
+ src/liblzma/api/lzma/version.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit a2cda572498e96163fe4e2bde096d5dd7b814668
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 11:27:27 +0800
+
+    Add NEWS for 5.6.1
+
+ NEWS | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+commit 8583c6021124e388bce044a09f00ebabfd6165a7
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 10:43:20 +0800
+
+    Translations: Add missing --riscv option to man page translations.
+
+ po4a/de.po    | 702 +++++++++++++++++++++++++++++-----------------------------
+ po4a/fr.po    | 549 ++++++++++++++++++++++-----------------------
+ po4a/ko.po    | 702 +++++++++++++++++++++++++++++-----------------------------
+ po4a/pt_BR.po | 641 +++++++++++++++++++++++++++--------------------------
+ po4a/ro.po    | 702 +++++++++++++++++++++++++++++-----------------------------
+ po4a/uk.po    | 702 +++++++++++++++++++++++++++++-----------------------------
+ 6 files changed, 2024 insertions(+), 1974 deletions(-)
+
+commit 74b138d2a6529f2c07729d7c77b1725a8e8b16f1
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 10:18:29 +0800
+
+    Tests: Update two test files.
+    
+    The original files were generated with random local to my machine.
+    To better reproduce these files in the future, a constant seed was used
+    to recreate these files.
+
+ tests/files/bad-3-corrupt_lzma2.xz     | Bin 484 -> 512 bytes
+ tests/files/good-large_compressed.lzma | Bin 35430 -> 35421 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 3ec6dfd656bdd40ede2a5f11e6be338988e38be4
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 10:08:32 +0800
+
+    Tests: Test --single-stream can decompress bad-3-corrupt_lzma2.xz.
+    
+    The first stream in this file is valid, so this tests that xz properly
+    stops after decompressing it.
+
+ tests/test_files.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit a67dcce6109c2f932a0a86abb0d7a95d3c31fb3e
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 10:05:32 +0800
+
+    Tests: Update RISC-V test files.
+    
+    This increases code coverage and tests for possible shifting bugs.
+
+ tests/files/good-1-riscv-lzma2-1.xz | Bin 7512 -> 7424 bytes
+ tests/files/good-1-riscv-lzma2-2.xz | Bin 7512 -> 7432 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 058337b0f1da9f166049ecc972fa5c499c1af08c
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 09:52:32 +0800
+
+    liblzma: Fix typos in crc32_fast.c and crc64_fast.c.
+
+ src/liblzma/check/crc32_fast.c | 4 ++--
+ src/liblzma/check/crc64_fast.c | 3 +--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+commit cd5de9c1bbab3dd41b34b37a89c193fb6ff51ca5
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 09:49:55 +0800
+
+    Tests: Replace HAVE_MICROLZMA usage in CMake and Autotools builds.
+    
+    This reverts commit adaacafde6661496ca2814b1e94a3ba5186428cb.
+
+ CMakeLists.txt         | 15 ++++++++++-----
+ configure.ac           |  9 ++-------
+ tests/Makefile.am      |  9 ++++++---
+ tests/test_microlzma.c | 12 ++++--------
+ 4 files changed, 22 insertions(+), 23 deletions(-)
+
+commit 651a1545c8b6150051a0b44857136efd419afc6f
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-09 09:20:57 +0800
+
+    liblzma: Fix false Valgrind error report with GCC.
+    
+    With GCC and a certain combination of flags, Valgrind will falsely
+    trigger an invalid write. This appears to be due to the omission of
+    instructions to properly save, set up, and restore the frame pointer.
+    
+    The IFUNC resolver is a leaf function since it only calls a function
+    that is inlined. So sometimes GCC omits the frame pointer instructions
+    in the resolver unless this optimization is explictly disabled.
+    
+    This fixes https://bugzilla.redhat.com/show_bug.cgi?id=2267598.
+
+ src/liblzma/check/crc32_fast.c |  9 +++------
+ src/liblzma/check/crc64_fast.c |  7 +++----
+ src/liblzma/check/crc_common.h | 25 +++++++++++++++++++++++++
+ 3 files changed, 31 insertions(+), 10 deletions(-)
+
+commit 6e97b299f1b22e366ec42ba5dc5b9d0746e87b84
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2024-03-05 23:21:26 +0200
+
+    liblzma: Fix a typo in a comment in the RISC-V filter.
+
+ src/liblzma/simple/riscv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4e1c97052b5f14f4d6dda99d12cbbd01e66e3712
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-05 00:34:46 +0800
+
+    liblzma: Use attribute no_profile_instrument_function with ifunc.
+    
+    Thanks to Sam James for determining this was the attribute needed to
+    workaround the GCC bug and for his version of the patch in Gentoo.
+
+ src/liblzma/check/crc32_fast.c | 5 +++++
+ src/liblzma/check/crc64_fast.c | 3 +++
+ 2 files changed, 8 insertions(+)
+
+commit ed957d39426695e948b06de0ed952a2fbbe84bd1
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-03-05 00:27:31 +0800
+
+    Build: Require attribute no_profile_instrument_function for ifunc usage.
+    
+    Using __attribute__((__no_profile_instrument_function__)) on the ifunc
+    resolver works around a bug in GCC -fprofile-generate:
+    it adds profiling code even to ifunc resolvers which can make
+    the ifunc resolver crash at program startup. This attribute
+    was not introduced until GCC 7 and Clang 13, so ifunc won't
+    be used with prior versions of these compilers.
+    
+    This bug was brought to our attention by:
+    
+        https://bugs.gentoo.org/925415
+    
+    And was reported to upstream GCC by:
+    
+        https://gcc.gnu.org/bugzilla/show_bug.cgi?id=11411
+
+ CMakeLists.txt | 7 +++++++
+ configure.ac   | 7 +++++++
+ 2 files changed, 14 insertions(+)
+
+commit e98ddaf85a1a8fb3cc863637f83356cc9db31e13
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2024-03-04 19:23:18 +0200
+
+    liblzma: Fix a comment in the RISC-V filter.
+
+ src/liblzma/simple/riscv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 319cec142f67fe294e0486402f1569f223d9a83d
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2024-02-29 16:35:52 +0200
+
+    CMake: Warn if translated man pages are missing.
+
+ CMakeLists.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+commit 46c3e113d8eeb1a731a60829fa7f5d1b519f7f26
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2024-02-29 16:35:52 +0200
+
+    CMake: Warn if gettext tools and pre-created .gmo files are missing.
+    
+    It's only done with CMake >= 3.20 and if library support
+    for translation was already found.
+    
+    Sort of fixes: https://github.com/tukaani-project/xz/issues/82
+
+ CMakeLists.txt | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+commit 86bec8334bb1dcb6d9293a11cdccd895b17f364b
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2024-02-28 18:26:25 +0200
+
+    xz: Add comments.
+
+ src/xz/coder.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit 5c91b454c24e043ca8f2cc7d2b09bd091dafe655
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-02-27 23:42:41 +0800
+
+    xz: Change logging level for thread reduction to highest verbosity only.
+    
+    Now that multi threaded encoding is the default, users do not need to
+    see a warning message everytime the number of threads is reduced. On
+    some machines, this could happen very often. It is not unreasonable for
+    users to need to set double verbose mode to see this kind of
+    information.
+    
+    To see these warning messages -vv or --verbose --verbose must be passed
+    to set xz into the highest possible verbosity mode.
+    
+    These warnings had caused automated testing frameworks to fail when they
+    expected no output to stderr.
+    
+    Thanks to Sebastian Andrzej Siewior for reporting this and for the
+    initial version of the patch.
+
+ src/xz/coder.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit d0e57b2f159f8fd03a9a89f2f593a768d0487898
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2024-02-26 23:06:13 +0200
+
+    Fix sorting in THANKS.
+
+ THANKS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit d416be55ac02af1144fed455fb18b710147bb490
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-02-26 23:39:29 +0800
+
+    Update THANKS.
+
+ THANKS | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit f06b33edd2aeabdb11836a2bf0b681768dad29d3
+Author: Chien Wong <m@xv97.com>
+Date:   2024-02-25 21:38:13 +0800
+
+    xz: Add missing RISC-V on the filter list in the man page
+    
+    Signed-off-by: Chien Wong <m@xv97.com>
+
+ src/xz/xz.1 | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit a100f9111c8cc7f5b5f0e4a5e8af3de7161c7975
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-02-26 23:02:06 +0800
+
+    Build: Fix Linux Landlock feature test in Autotools and CMake builds.
+    
+    The previous Linux Landlock feature test assumed that having the
+    linux/landlock.h header file was enough. The new feature tests also
+    requires that prctl() and the required Landlock system calls are
+    supported.
+
+ CMakeLists.txt    | 25 ++++++++++++++++++++++---
+ configure.ac      | 27 ++++++++++++++++++++++++++-
+ src/xz/sandbox.c  |  2 +-
+ src/xz/sandbox.h  |  2 +-
+ src/xzdec/xzdec.c |  8 ++++----
+ 5 files changed, 54 insertions(+), 10 deletions(-)
+
+commit d85efdc8911e6e8964ec920af44c8a6fe0a4c3c2
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-02-26 20:06:10 +0800
+
+    Tests: Add test_microlzma to .gitignore and CMakeLists.txt.
+
+ .gitignore     | 1 +
+ CMakeLists.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 42ee4256739779005a7f921946c8a8e483d1f2ed
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-02-26 19:56:25 +0800
+
+    Tests: Correct license header in test_microlzma.c.
+
+ tests/test_microlzma.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit c83349dfd9cf9c495005b6d30e2fd34a9cafc18a
+Author: Jia Tan <jiat0218@gmail.com>
+Date:   2024-02-25 21:41:55 +0800
+
+    Fix typos in NEWS and CMakeLists.
+
+ CMakeLists.txt | 2 +-
+ NEWS           | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
 commit 2d7d862e3ffa8cec4fd3fdffcd84e984a17aa429
 Author: Jia Tan <jiat0218@gmail.com>
 Date:   2024-02-24 15:55:08 +0800

@@ -170,6 +170,18 @@ else
 	exit 1
 fi
 
+# Test that --single-stream can decompress bad-3-corrupt_lzma2.xz.
+# The first Stream in this file should decompress without errors.
+# This file cannot be decompressed with xzdec.
+I="$srcdir/files/bad-3-corrupt_lzma2.xz"
+if test -z "$XZ" || "$XZ" -dc --single-stream $NO_WARN "$I" > /dev/null; then
+  [ $verbose -gt 0 ] && echo "Good first Stream failed xz with --single-stream: $I"
+	:
+else
+	echo "Good first Stream failed xz with --single-stream: $I"
+	exit 1
+fi
+
 
 #########
 # .lzma #

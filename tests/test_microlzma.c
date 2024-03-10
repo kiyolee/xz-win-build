@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 /// \file       test_microlzma.c
@@ -5,14 +7,9 @@
 //
 //  Author:     Jia Tan
 //
-//  This file has been put into the public domain.
-//  You can do whatever you want with this file.
-//
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "tests.h"
-
-#ifdef HAVE_MICROLZMA
 
 #define BUFFER_SIZE 1024
 
@@ -514,7 +511,6 @@ test_decode_bad_lzma_properties(void)
 	lzma_end(&strm);
 }
 #endif
-#endif
 
 
 extern int
@@ -522,17 +518,16 @@ main(int argc, char **argv)
 {
 	tuktest_start(argc, argv);
 
-#ifndef HAVE_MICROLZMA
-	tuktest_early_skip("MicroLZMA disabled");
+#ifndef HAVE_ENCODER_LZMA1
+	tuktest_early_skip("LZMA1 encoder disabled");
 #else
-#	ifdef HAVE_ENCODER_LZMA1
 	tuktest_run(test_encode_options);
 	tuktest_run(test_encode_basic);
 	tuktest_run(test_encode_small_out);
 	tuktest_run(test_encode_actions);
-#	endif
 
-#	if defined(HAVE_DECODER_LZMA1) && defined(HAVE_ENCODER_LZMA1)
+	// MicroLZMA decoder tests require the basic encoder functionality.
+#	ifdef HAVE_DECODER_LZMA1
 	goodbye_world_encoded_size = basic_microlzma_encode(goodbye_world,
 			ARRAY_SIZE(goodbye_world), &goodbye_world_encoded);
 
