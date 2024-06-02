@@ -139,6 +139,7 @@ copy /y $(TargetPath) $(OutDir)lzcat.exe
     <ClCompile Include="..\..\src\xz\message.c" />
     <ClCompile Include="..\..\src\xz\mytime.c" />
     <ClCompile Include="..\..\src\xz\options.c" />
+    <ClCompile Include="..\..\src\xz\sandbox.c" />
     <ClCompile Include="..\..\src\xz\signals.c" />
     <ClCompile Include="..\..\src\xz\suffix.c" />
     <ClCompile Include="..\..\src\xz\util.c" />

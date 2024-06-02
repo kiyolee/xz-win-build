@@ -2,7 +2,7 @@
 
 xz (liblzma) Windows build with Visual Studio.
 
-This version is xz-5.4.7.
+This version is xz-5.6.2.
 
 To build, simply open the required solution file, and
 you know how to use Visual Studio, right?

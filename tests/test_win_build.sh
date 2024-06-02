@@ -12,8 +12,6 @@ for i in \
     compress_generated_abc \
     compress_generated_random \
     compress_generated_text \
-    compress_prepared_bcj_sparc \
-    compress_prepared_bcj_x86 \
     ; do
   if bindir="$bindir" srcdir="$srcdir" verbose="$verbose" ./test_compress_win_build.sh $i; then
     echo "SUCCEED: test_compress $i"

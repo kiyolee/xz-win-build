@@ -1,13 +1,15 @@
 #!/bin/sh
+# SPDX-License-Identifier: 0BSD
 
 ###############################################################################
 #
 # Author: Lasse Collin
 #
-# This file has been put into the public domain.
-# You can do whatever you want with this file.
-#
 ###############################################################################
+
+# Mandatory argument:
+# $1 = test filename: compress_generated_<foo> or compress_prepared_<foo>
+#
 
 if test $# -lt 1; then
   exit 77
@@ -23,18 +25,25 @@ XZDEC_CMD=$bindir/xzdec.exe
 CREATE_COMPRESS_FILES_CMD=$bindir/create_compress_files.exe
 CONFIG_H=`dirname $0`/../win32/config.h
 
+XZ="$XZ_CMD"
+XZDEC="$XZDEC_CMD"
+
 # If xz wasn't built, this test is skipped.
-if test -x $XZ_CMD ; then
-	:
-else
+if test ! -x $XZ_CMD ; then
+	echo "xz was not built, skipping this test."
 	exit 77
 fi
+
+# xzdec isn't mandatory for this script.
+test -x "$XZDEC_CMD" || XZDEC=
 
 # If compression or decompression support is missing, this test is skipped.
 # This isn't perfect as if only some compressors or decompressors are disabled
 # then this script can still fail because for now this doesn't check the
 # availability of each filter.
-if grep 'define HAVE_ENCODERS' $CONFIG_H > /dev/null \
+if test ! -f $CONFIG_H ; then
+	:
+elif grep 'define HAVE_ENCODERS' $CONFIG_H > /dev/null \
 		&& grep 'define HAVE_DECODERS' $CONFIG_H > /dev/null ; then
 	:
 else
@@ -93,12 +102,12 @@ test_xz() {
 	fi
 }
 
+# Set memory usage limit for xz. xzdec has no memory usage limiter.
+# Force single-threaded mode as the test files are small
+# (so more than one thread wouldn't be used anyway) and
+# the tests are usually run in parallel.
 XZ="$XZ_CMD --memlimit-compress=48MiB --memlimit-decompress=5MiB \
-		--no-adjust --threads=1 --check=crc32"
-grep "define HAVE_CHECK_CRC64" $CONFIG_H > /dev/null \
-		&& XZ="$XZ --check=crc64"
-XZDEC="$XZDEC_CMD" # No memory usage limiter available
-test -x $XZDEC_CMD || XZDEC=
+		--no-adjust --threads=1"
 
 # Create the required input file if needed.
 #
@@ -147,21 +156,26 @@ test_xz -4
 
 test_filter()
 {
-	grep "define HAVE_ENCODER_$1 1" $CONFIG_H > /dev/null || return
-	grep "define HAVE_DECODER_$1 1" $CONFIG_H > /dev/null || return
+	if test -f $CONFIG_H ; then
+		grep "define HAVE_ENCODER_$1 1" $CONFIG_H > /dev/null \
+			|| return
+		grep "define HAVE_DECODER_$1 1" $CONFIG_H > /dev/null \
+			|| return
+	fi
 	shift
-	test_xz "$@" --lzma2=dict=64KiB,nice=32,mode=fast
+	test_xz --filters="$* lzma2:dict=64KiB,nice=32,mode=fast"
 }
 
-test_filter DELTA --delta=dist=1
-test_filter DELTA --delta=dist=4
-test_filter DELTA --delta=dist=256
-test_filter X86 --x86
-test_filter POWERPC --power
-test_filter IA64 --ia64
-test_filter ARM --arm
-test_filter ARMTHUMB --armthumb
-test_filter ARM64 --arm64
-test_filter SPARC --sparc
+test_filter DELTA delta:dist=1
+test_filter DELTA delta:dist=4
+test_filter DELTA delta:dist=256
+test_filter X86 x86
+test_filter POWERPC powerpc
+test_filter IA64 ia64
+test_filter ARM arm
+test_filter ARMTHUMB armthumb
+test_filter ARM64 arm64
+test_filter SPARC sparc
+test_filter RISCV riscv
 
 exit 0

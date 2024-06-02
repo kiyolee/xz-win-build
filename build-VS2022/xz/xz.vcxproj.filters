@@ -93,6 +93,9 @@
     <ClCompile Include="..\..\src\xz\util.c">
       <Filter>Source Files\xz</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\xz\sandbox.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\lib\getopt.h">

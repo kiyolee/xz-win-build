@@ -1,11 +1,9 @@
 #!/bin/sh
+# SPDX-License-Identifier: 0BSD
 
 ###############################################################################
 #
 # Author: Lasse Collin
-#
-# This file has been put into the public domain.
-# You can do whatever you want with this file.
 #
 ###############################################################################
 
@@ -32,7 +30,9 @@ fi
 # This isn't perfect as if only some decompressors are disabled
 # then some good files might not decompress and the test fails
 # for a (kind of) wrong reason.
-if grep 'define HAVE_DECODERS' $CONFIG_H > /dev/null ; then
+if test ! -f $CONFIG_H ; then
+	:
+elif grep 'define HAVE_DECODERS' $CONFIG_H > /dev/null ; then
 	:
 else
 	echo "Decompression support is disabled, skipping this test."
@@ -44,6 +44,7 @@ fi
 EXIT_STATUS=0
 have_feature()
 {
+	test -f $CONFIG_H || return 0
 	grep "define HAVE_$1 1" $CONFIG_H > /dev/null && return 0
 	printf '%s: Skipping because HAVE_%s is not enabled\n' "$2" "$1"
 	EXIT_STATUS=77
@@ -58,8 +59,10 @@ have_feature()
 # If these integrity check types were disabled at build time,
 # allow the tests to pass still.
 NO_WARN=
-grep 'define HAVE_CHECK_CRC64' $CONFIG_H > /dev/null || NO_WARN=-qQ
-grep 'define HAVE_CHECK_SHA256' $CONFIG_H > /dev/null || NO_WARN=-qQ
+if test -f $CONFIG_H ; then
+	grep 'define HAVE_CHECK_CRC64' $CONFIG_H > /dev/null || NO_WARN=-qQ
+	grep 'define HAVE_CHECK_SHA256' $CONFIG_H > /dev/null || NO_WARN=-qQ
+fi
 
 for I in "$srcdir"/files/good-*.xz
 do
@@ -87,6 +90,11 @@ do
 	case $I in
 		*/good-1-arm64-lzma2-*.xz)
 			have_feature DECODER_ARM64 "$I" || continue
+			;;
+	esac
+	case $I in
+		*/good-1-riscv-lzma2-*.xz)
+			have_feature DECODER_RISCV "$I" || continue
 			;;
 	esac
 
