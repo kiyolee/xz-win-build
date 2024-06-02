@@ -125,7 +125,7 @@
    declarations. */
 #define HAVE_VISIBILITY 0
 
-/* Define to 1 if the system has the type `_Bool'. */
+/* Define to 1 if the system has the type '_Bool'. */
 #if defined(_MSC_VER) && _MSC_VER >= 1800
 #define HAVE__BOOL 1
 #endif
@@ -155,7 +155,7 @@
 /* Define to the home page for this package. */
 #define PACKAGE_URL "https://xz.tukaani.org/xz-utils/"
 
-/* The size of `size_t', as computed by sizeof. */
+/* The size of 'size_t', as computed by sizeof. */
 #ifdef _WIN64
 #define SIZEOF_SIZE_T 8
 #else
