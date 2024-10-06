@@ -93,6 +93,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\tests\test_lzip_decoder.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\tests\tests_w32res.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

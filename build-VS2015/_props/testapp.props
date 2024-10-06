@@ -13,6 +13,10 @@
     <Link>
       <AdditionalDependencies>setargv.obj;$(OutDir)liblzma.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../../src/common;../../../src/liblzma/api;../../../win32</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -22,6 +26,10 @@
     <Link>
       <AdditionalDependencies>setargv.obj;$(OutDir)liblzma.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../../src/common;../../../src/liblzma/api;../../../win32</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -31,6 +39,10 @@
     <Link>
       <AdditionalDependencies>setargv.obj;$(OutDir)liblzma.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../../src/common;../../../src/liblzma/api;../../../win32</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -40,6 +52,10 @@
     <Link>
       <AdditionalDependencies>setargv.obj;$(OutDir)liblzma.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../../src/common;../../../src/liblzma/api;../../../win32</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>
