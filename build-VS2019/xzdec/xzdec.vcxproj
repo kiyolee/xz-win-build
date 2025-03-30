@@ -94,6 +94,7 @@
     <ClCompile Include="..\..\lib\getopt.c" />
     <ClCompile Include="..\..\lib\getopt1.c" />
     <ClCompile Include="..\..\src\common\tuklib_exit.c" />
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_nonprint.c" />
     <ClCompile Include="..\..\src\common\tuklib_progname.c" />
     <ClCompile Include="..\..\src\xzdec\xzdec.c" />
   </ItemGroup>

@@ -93,8 +93,11 @@
     <ClCompile Include="..\..\src\xz\util.c">
       <Filter>Source Files\xz</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\xz\sandbox.c">
-      <Filter>Source Files\xz</Filter>
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_nonprint.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_wrap.c">
+      <Filter>Source Files\common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

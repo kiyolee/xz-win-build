@@ -48,6 +48,9 @@
     <ClCompile Include="..\..\src\xzdec\xzdec.c">
       <Filter>Source Files\xzdec</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_nonprint.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\lib\getopt.h">

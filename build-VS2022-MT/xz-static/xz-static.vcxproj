@@ -155,7 +155,9 @@ copy /y $(TargetPath) $(OutDir)static\lzcat.exe
     <ClCompile Include="..\..\lib\getopt1.c" />
     <ClCompile Include="..\..\src\common\tuklib_exit.c" />
     <ClCompile Include="..\..\src\common\tuklib_mbstr_fw.c" />
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_nonprint.c" />
     <ClCompile Include="..\..\src\common\tuklib_mbstr_width.c" />
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_wrap.c" />
     <ClCompile Include="..\..\src\common\tuklib_open_stdxxx.c" />
     <ClCompile Include="..\..\src\common\tuklib_progname.c" />
     <ClCompile Include="..\..\src\xz\args.c" />
@@ -167,7 +169,6 @@ copy /y $(TargetPath) $(OutDir)static\lzcat.exe
     <ClCompile Include="..\..\src\xz\message.c" />
     <ClCompile Include="..\..\src\xz\mytime.c" />
     <ClCompile Include="..\..\src\xz\options.c" />
-    <ClCompile Include="..\..\src\xz\sandbox.c" />
     <ClCompile Include="..\..\src\xz\signals.c" />
     <ClCompile Include="..\..\src\xz\suffix.c" />
     <ClCompile Include="..\..\src\xz\util.c" />

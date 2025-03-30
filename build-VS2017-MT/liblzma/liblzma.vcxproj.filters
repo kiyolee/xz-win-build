@@ -93,13 +93,7 @@
     <ClCompile Include="..\..\src\liblzma\check\crc32_fast.c">
       <Filter>Source Files\liblzma\check</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\liblzma\check\crc32_table.c">
-      <Filter>Source Files\liblzma\check</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\liblzma\check\crc64_fast.c">
-      <Filter>Source Files\liblzma\check</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\liblzma\check\crc64_table.c">
       <Filter>Source Files\liblzma\check</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\liblzma\check\sha256.c">
@@ -321,9 +315,6 @@
     <ClCompile Include="..\..\src\liblzma\simple\x86.c">
       <Filter>Source Files\liblzma\simple</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\liblzma\simple\riscv.c">
-      <Filter>Source Files\liblzma\simple</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\common\mythread.h">
@@ -405,6 +396,9 @@
       <Filter>Header Files\liblzma\check</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\liblzma\check\crc64_table_le.h">
+      <Filter>Header Files\liblzma\check</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\liblzma\check\crc_common.h">
       <Filter>Header Files\liblzma\check</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\liblzma\common\alone_decoder.h">
