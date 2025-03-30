@@ -191,6 +191,13 @@ typedef unsigned char _Bool;
 #	endif
 #endif
 
+// VS2013 or before.
+#ifdef _MSC_VER
+#	if _MSC_VER < 1900 && !defined(inline)
+#		define inline __inline
+#	endif
+#endif
+
 ////////////
 // Macros //
 ////////////
