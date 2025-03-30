@@ -10,6 +10,8 @@
 # Mandatory argument:
 # $1 = test filename: compress_generated_<foo> or compress_prepared_<foo>
 #
+# Optional argument:
+# $2 = directory of the xz and xzdec executables
 
 if test $# -lt 1; then
   exit 77
@@ -25,17 +27,14 @@ XZDEC_CMD=$bindir/xzdec.exe
 CREATE_COMPRESS_FILES_CMD=$bindir/create_compress_files.exe
 CONFIG_H=`dirname $0`/../win32/config.h
 
-XZ="$XZ_CMD"
-XZDEC="$XZDEC_CMD"
-
 # If xz wasn't built, this test is skipped.
-if test ! -x $XZ_CMD ; then
+if test ! -x $XZ_CMD; then
 	echo "xz was not built, skipping this test."
 	exit 77
 fi
 
 # xzdec isn't mandatory for this script.
-test -x "$XZDEC_CMD" || XZDEC=
+test -x "$XZDEC_CMD" || XZDEC_CMD=
 
 # If compression or decompression support is missing, this test is skipped.
 # This isn't perfect as if only some compressors or decompressors are disabled
@@ -108,6 +107,7 @@ test_xz() {
 # the tests are usually run in parallel.
 XZ="$XZ_CMD --memlimit-compress=48MiB --memlimit-decompress=5MiB \
 		--no-adjust --threads=1"
+XZDEC="$XZDEC_CMD"
 
 # Create the required input file if needed.
 #
@@ -157,10 +157,8 @@ test_xz -4
 test_filter()
 {
 	if test -f $CONFIG_H ; then
-		grep "define HAVE_ENCODER_$1 1" $CONFIG_H > /dev/null \
-			|| return
-		grep "define HAVE_DECODER_$1 1" $CONFIG_H > /dev/null \
-			|| return
+		grep "define HAVE_ENCODER_$1[ 1]*\$" $CONFIG_H > /dev/null || return
+		grep "define HAVE_DECODER_$1[ 1]*\$" $CONFIG_H > /dev/null || return
 	fi
 	shift
 	test_xz --filters="$* lzma2:dict=64KiB,nice=32,mode=fast"

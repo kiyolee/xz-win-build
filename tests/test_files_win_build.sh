@@ -16,7 +16,7 @@ XZ_CMD=$bindir/xz.exe
 XZDEC_CMD=$bindir/xzdec.exe
 CONFIG_H=`dirname $0`/../win32/config.h
 
-# If both xz and xzdec were not build, skip this test.
+# If both xz and xzdec were not built, skip this test.
 XZ=$XZ_CMD
 XZDEC=$XZDEC_CMD
 test -x "$XZ" || XZ=
