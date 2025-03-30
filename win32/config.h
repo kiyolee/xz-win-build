@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: 0BSD */
 /* config.h for compiling with MSVC */
 
 /* Prefix for symbols exported by tuklib_*.c files */
@@ -75,6 +76,9 @@
 /* Define to 1 if powerpc encoder is enabled. */
 #define HAVE_ENCODER_POWERPC 1
 
+/* Define to 1 if riscv decoder is enabled. */
+#define HAVE_DECODER_RISCV 1
+
 /* Define to 1 if sparc encoder is enabled. */
 #define HAVE_ENCODER_SPARC 1
 
@@ -147,13 +151,14 @@
 #define NDEBUG 1
 #endif
 
+/* Define to the address where bug reports for this package should be sent. */
+#define PACKAGE_BUGREPORT "xz@tukaani.org"
+
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "XZ Utils"
 
-#define PACKAGE_BUGREPORT "xz@tukaani.org"
-
 /* Define to the home page for this package. */
-#define PACKAGE_URL "https://xz.tukaani.org/xz-utils/"
+#define PACKAGE_URL "https://tukaani.org/xz/"
 
 /* The size of 'size_t', as computed by sizeof. */
 #ifdef _WIN64

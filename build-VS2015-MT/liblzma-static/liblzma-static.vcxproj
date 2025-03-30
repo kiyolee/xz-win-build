@@ -167,6 +167,7 @@
     <ClCompile Include="..\..\src\liblzma\simple\armthumb.c" />
     <ClCompile Include="..\..\src\liblzma\simple\ia64.c" />
     <ClCompile Include="..\..\src\liblzma\simple\powerpc.c" />
+    <ClCompile Include="..\..\src\liblzma\simple\riscv.c" />
     <ClCompile Include="..\..\src\liblzma\simple\simple_coder.c" />
     <ClCompile Include="..\..\src\liblzma\simple\simple_decoder.c" />
     <ClCompile Include="..\..\src\liblzma\simple\simple_encoder.c" />

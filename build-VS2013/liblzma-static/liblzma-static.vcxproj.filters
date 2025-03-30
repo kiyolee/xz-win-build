@@ -312,6 +312,9 @@
     <ClCompile Include="..\..\src\liblzma\simple\x86.c">
       <Filter>Source Files\liblzma\simple</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\liblzma\simple\riscv.c">
+      <Filter>Source Files\liblzma\simple</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\common\mythread.h">
