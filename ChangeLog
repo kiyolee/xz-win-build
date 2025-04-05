@@ -1,3 +1,226 @@
+commit a522a226545730551f7e7c2685fab27cf567746c
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:43 +0300
+
+    Bump version and soname for 5.8.1
+
+ src/liblzma/Makefile.am        | 2 +-
+ src/liblzma/api/lzma/version.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 1c462c2ad86ff85766928638431029cd0b0dc995
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:43 +0300
+
+    Add NEWS for 5.8.1
+
+ NEWS | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+commit 513cabcf7f5ce1c3ed0619e791393fc53d1dbbd0
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:43 +0300
+
+    Tests: Call lzma_code() in smaller chunks in fuzz_common.h
+    
+    This makes it easy to crash fuzz_decode_stream_mt when tested
+    against the code from 5.8.0.
+    
+    Obviously this might make it harder to reach some other code path now.
+    The previous code has been in use since 2018 when fuzzing was added
+    in 106d1a663d4b ("Tests: Add a fuzz test program and a config file
+    for OSS-Fuzz.").
+
+ tests/ossfuzz/fuzz_common.h | 31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
+
+commit 48440e24a25911ae59e8518b67a1e0f6f1c293bf
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:43 +0300
+
+    Tests: Add a fuzzing target for the multithreaded .xz decoder
+    
+    It doesn't seem possible to trigger the CVE-2025-31115 bug with this
+    fuzzing target at the moment. It's because the code in fuzz_common.h
+    passes the whole input buffer to lzma_code() at once.
+
+ tests/ossfuzz/fuzz_decode_stream_mt.c | 47 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+commit 0c80045ab82c406858d9d5bcea9f48ebc3d0a81d
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:42 +0300
+
+    liblzma: mt dec: Fix lack of parallelization in single-shot decoding
+    
+    Single-shot decoding means calling lzma_code() by giving it the whole
+    input at once and enough output buffer space to store the uncompressed
+    data, and combining this with LZMA_FINISH and no timeout
+    (lzma_mt.timeout = 0). This way the file is decoded with a single
+    lzma_code() call if possible.
+    
+    The bug prevented the decoder from starting more than one worker thread
+    in single-shot mode. The issue was noticed when reviewing the code;
+    there are no bug reports. Thus maybe few have tried this mode.
+    
+    Fixes: 64b6d496dc81 ("liblzma: Threaded decoder: Always wait for output if LZMA_FINISH is used.")
+
+ src/liblzma/common/stream_decoder_mt.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+commit 8188048854e8d11071b8a50d093c74f4c030acc9
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:42 +0300
+
+    liblzma: mt dec: Don't modify thr->in_size in the worker thread
+    
+    Don't set thr->in_size = 0 when returning the thread to the stack of
+    available threads. Not only is it useless, but the main thread may
+    read the value in SEQ_BLOCK_THR_RUN. With valid inputs, it made
+    no difference if the main thread saw the original value or 0. With
+    invalid inputs (when worker thread stops early), thr->in_size was
+    no longer modified after the previous commit with the security fix
+    ("Don't free the input buffer too early").
+    
+    So while the bug appears harmless now, it's important to fix it because
+    the variable was being modified without proper locking. It's trivial
+    to fix because there is no need to change the value. Only main thread
+    needs to set the value in (in SEQ_BLOCK_THR_INIT) when starting a new
+    Block before the worker thread is activated.
+    
+    Fixes: 4cce3e27f529 ("liblzma: Add threaded .xz decompressor.")
+    Reviewed-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+    Thanks-to: Sam James <sam@gentoo.org>
+
+ src/liblzma/common/stream_decoder_mt.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit d5a2ffe41bb77b918a8c96084885d4dbe4bf6480
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:42 +0300
+
+    liblzma: mt dec: Don't free the input buffer too early (CVE-2025-31115)
+    
+    The input buffer must be valid as long as the main thread is writing
+    to the worker-specific input buffer. Fix it by making the worker
+    thread not free the buffer on errors and not return the worker thread to
+    the pool. The input buffer will be freed when threads_end() is called.
+    
+    With invalid input, the bug could at least result in a crash. The
+    effects include heap use after free and writing to an address based
+    on the null pointer plus an offset.
+    
+    The bug has been there since the first committed version of the threaded
+    decoder and thus affects versions from 5.3.3alpha to 5.8.0.
+    
+    As the commit message in 4cce3e27f529 says, I had made significant
+    changes on top of Sebastian's patch. This bug was indeed introduced
+    by my changes; it wasn't in Sebastian's version.
+    
+    Thanks to Harri K. Koskinen for discovering and reporting this issue.
+    
+    Fixes: 4cce3e27f529 ("liblzma: Add threaded .xz decompressor.")
+    Reported-by: Harri K. Koskinen <x64nop@nannu.org>
+    Reviewed-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+    Thanks-to: Sam James <sam@gentoo.org>
+
+ src/liblzma/common/stream_decoder_mt.c | 31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
+
+commit c0c835964dfaeb2513a3c0bdb642105152fe9f34
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:42 +0300
+
+    liblzma: mt dec: Simplify by removing the THR_STOP state
+    
+    The main thread can directly set THR_IDLE in threads_stop() which is
+    called when errors are detected. threads_stop() won't return the stopped
+    threads to the pool or free the memory pointed by thr->in anymore, but
+    it doesn't matter because the existing workers won't be reused after
+    an error. The resources will be cleaned up when threads_end() is
+    called (reinitializing the decoder always calls threads_end()).
+    
+    Reviewed-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+    Thanks-to: Sam James <sam@gentoo.org>
+
+ src/liblzma/common/stream_decoder_mt.c | 75 +++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 46 deletions(-)
+
+commit 831b55b971cf579ee16a854f177c36b20d3c6999
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:42 +0300
+
+    liblzma: mt dec: Fix a comment
+    
+    Reviewed-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+    Thanks-to: Sam James <sam@gentoo.org>
+
+ src/liblzma/common/stream_decoder_mt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b9d168eee4fb6393b4fe207c0aeb5faee316ca1a
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-03 14:34:30 +0300
+
+    liblzma: Add assertions to lzma_bufcpy()
+
+ src/liblzma/common/common.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit c8e0a4897b4d0f906966f5d4d4f662221d64f3ae
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-04-02 16:40:22 +0300
+
+    DOS: Update Makefile to fix the build
+
+ dos/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 307c02ed698a69763ef1c9c0df4ff24727442118
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-03-29 12:41:32 +0200
+
+    sysdefs.h: Avoid <stdalign.h> even with C11 compilers
+    
+    Oracle Developer Studio 12.6 on Solaris 10 claims C11 support in
+    __STDC_VERSION__ and supports _Alignas. However, <stdalign.h> is missing.
+    We only need alignas, so define it to _Alignas with C11/C17 compilers.
+    If something included <stdalign.h> later, it shouldn't cause problems.
+    
+    Thanks to Ihsan Dogan for reporting the issue and testing the fix.
+    
+    Fixes: c0e7eaae8d6eef1e313c9d0da20ccf126ec61f38
+
+ src/common/sysdefs.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 7ce38b318339d6c01378a77585e08169ca3a604e
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-03-29 12:32:05 +0200
+
+    Update THANKS
+
+ THANKS | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 688e51bde4c987589717b2be1a1fde9576c604fc
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-03-29 12:21:51 +0200
+
+    Translations: Update the Croatian translation
+
+ po/hr.po | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit 173fb5c68b08a8c1369550267be258132b7760c6
+Author: Lasse Collin <lasse.collin@tukaani.org>
+Date:   2025-03-25 18:23:57 +0200
+
+    doc/SHA256SUMS: Add 5.8.0
+
+ doc/SHA256SUMS | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 commit db9258e828bc2cd96e3954f1ddcc9d3530589025
 Author: Lasse Collin <lasse.collin@tukaani.org>
 Date:   2025-03-25 15:18:32 +0200
