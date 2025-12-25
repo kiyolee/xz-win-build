@@ -11,8 +11,9 @@
 
 #include "private.h"
 #include <stdarg.h>
-#ifdef _MSC_VER
-#include <io.h>
+
+#if defined(_WIN32) && !defined(__CYGWIN__)
+#	include <io.h>
 #endif
 
 
