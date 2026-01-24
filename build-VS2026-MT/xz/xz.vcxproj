@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D6CA065A-71C9-4B1E-98FF-770C1521D744}</ProjectGuid>
+    <RootNamespace>xz</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_props\app.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_props\app.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_props\app.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_props\app.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz.exe
+copy /y $(TargetPath) $(OutDir)xzcat.exe
+copy /y $(TargetPath) $(OutDir)lzma.exe
+copy /y $(TargetPath) $(OutDir)unlzma.exe
+copy /y $(TargetPath) $(OutDir)lzcat.exe
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz.exe
+copy /y $(TargetPath) $(OutDir)xzcat.exe
+copy /y $(TargetPath) $(OutDir)lzma.exe
+copy /y $(TargetPath) $(OutDir)unlzma.exe
+copy /y $(TargetPath) $(OutDir)lzcat.exe
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz.exe
+copy /y $(TargetPath) $(OutDir)xzcat.exe
+copy /y $(TargetPath) $(OutDir)lzma.exe
+copy /y $(TargetPath) $(OutDir)unlzma.exe
+copy /y $(TargetPath) $(OutDir)lzcat.exe
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <PostBuildEvent>
+      <Command>copy /y $(TargetPath) $(OutDir)unxz.exe
+copy /y $(TargetPath) $(OutDir)xzcat.exe
+copy /y $(TargetPath) $(OutDir)lzma.exe
+copy /y $(TargetPath) $(OutDir)unlzma.exe
+copy /y $(TargetPath) $(OutDir)lzcat.exe
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\lib\getopt.c" />
+    <ClCompile Include="..\..\lib\getopt1.c" />
+    <ClCompile Include="..\..\src\common\tuklib_exit.c" />
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_fw.c" />
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_nonprint.c" />
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_width.c" />
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_wrap.c" />
+    <ClCompile Include="..\..\src\common\tuklib_open_stdxxx.c" />
+    <ClCompile Include="..\..\src\common\tuklib_progname.c" />
+    <ClCompile Include="..\..\src\xz\args.c" />
+    <ClCompile Include="..\..\src\xz\coder.c" />
+    <ClCompile Include="..\..\src\xz\file_io.c" />
+    <ClCompile Include="..\..\src\xz\hardware.c" />
+    <ClCompile Include="..\..\src\xz\list.c" />
+    <ClCompile Include="..\..\src\xz\main.c" />
+    <ClCompile Include="..\..\src\xz\message.c" />
+    <ClCompile Include="..\..\src\xz\mytime.c" />
+    <ClCompile Include="..\..\src\xz\options.c" />
+    <ClCompile Include="..\..\src\xz\signals.c" />
+    <ClCompile Include="..\..\src\xz\suffix.c" />
+    <ClCompile Include="..\..\src\xz\util.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\lib\getopt.h" />
+    <ClInclude Include="..\..\lib\getopt_int.h" />
+    <ClInclude Include="..\..\src\common\mythread.h" />
+    <ClInclude Include="..\..\src\common\sysdefs.h" />
+    <ClInclude Include="..\..\src\common\tuklib_common.h" />
+    <ClInclude Include="..\..\src\common\tuklib_config.h" />
+    <ClInclude Include="..\..\src\common\tuklib_exit.h" />
+    <ClInclude Include="..\..\src\common\tuklib_gettext.h" />
+    <ClInclude Include="..\..\src\common\tuklib_integer.h" />
+    <ClInclude Include="..\..\src\common\tuklib_mbstr.h" />
+    <ClInclude Include="..\..\src\common\tuklib_open_stdxxx.h" />
+    <ClInclude Include="..\..\src\common\tuklib_progname.h" />
+    <ClInclude Include="..\..\src\xz\args.h" />
+    <ClInclude Include="..\..\src\xz\coder.h" />
+    <ClInclude Include="..\..\src\xz\file_io.h" />
+    <ClInclude Include="..\..\src\xz\hardware.h" />
+    <ClInclude Include="..\..\src\xz\list.h" />
+    <ClInclude Include="..\..\src\xz\main.h" />
+    <ClInclude Include="..\..\src\xz\message.h" />
+    <ClInclude Include="..\..\src\xz\mytime.h" />
+    <ClInclude Include="..\..\src\xz\options.h" />
+    <ClInclude Include="..\..\src\xz\private.h" />
+    <ClInclude Include="..\..\src\xz\signals.h" />
+    <ClInclude Include="..\..\src\xz\suffix.h" />
+    <ClInclude Include="..\..\src\xz\util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\xz\xz_w32res.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <Target Name="AfterClean">
+    <Exec Command="if exist $(OutDir)unxz.exe del $(OutDir)unxz.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)xzcat.exe del $(OutDir)xzcat.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)lzma.exe del $(OutDir)lzma.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)unlzma.exe del $(OutDir)unlzma.exe /F /Q 2&gt;nul" />
+    <Exec Command="if exist $(OutDir)lzcat.exe del $(OutDir)lzcat.exe /F /Q 2&gt;nul" />
+  </Target>
+</Project>

@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\common">
+      <UniqueIdentifier>{4b86bafc-e8ba-4d17-8348-c1f5214f16d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\getopt">
+      <UniqueIdentifier>{d47e176d-d7f2-4731-87f2-318af1790611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\xz">
+      <UniqueIdentifier>{382e9116-7aa0-46ce-88c6-e548c42e8ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common">
+      <UniqueIdentifier>{cae24739-6a26-4fba-9eb2-1be8420ffd92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\getopt">
+      <UniqueIdentifier>{2d6a66c7-1f28-44d7-a76c-4b280bd20691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\xz">
+      <UniqueIdentifier>{31ad69a3-1b64-48fb-8712-f8974cae621d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\xz">
+      <UniqueIdentifier>{84d4351c-27ee-4307-8614-6d3facc57f2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\lib\getopt.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\getopt1.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_exit.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_fw.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_width.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_open_stdxxx.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_progname.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\args.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\coder.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\file_io.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\hardware.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\list.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\main.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\message.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\mytime.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\options.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\signals.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\suffix.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\xz\util.c">
+      <Filter>Source Files\xz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_nonprint.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\tuklib_mbstr_wrap.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\lib\getopt.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\getopt_int.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\mythread.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\sysdefs.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\tuklib_common.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\tuklib_config.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\tuklib_exit.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\tuklib_gettext.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\tuklib_integer.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\tuklib_mbstr.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\tuklib_open_stdxxx.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\tuklib_progname.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\args.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\coder.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\file_io.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\hardware.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\list.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\main.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\message.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\mytime.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\options.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\private.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\signals.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\suffix.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\xz\util.h">
+      <Filter>Header Files\xz</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\xz\xz_w32res.rc">
+      <Filter>Resource Files\xz</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
